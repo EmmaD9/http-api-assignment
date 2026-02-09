@@ -68,9 +68,28 @@ const onRequest = (request, response) => {
   const protocol = request.connection.encrypted ? 'https' : 'http';
   const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
 
-  if (urlStruct[parsedUrl.pathname]) {
-    return urlStruct[parsedUrl.pathname](request, response);
+  switch (parsedUrl.pathname) {
+    case '/':
+      responses.getIndex(request, response);
+      break;
+    case '/style.css':
+      responses.getCSS(request, response);
+      break;
+    case '/success':
+      responses.success(request, response);
+      break;
+    case '/':
+      htmlHandler.getIndex(request, response);
+      break;
+    case '/style.css':
+      htmlHandler.getCSS(request, response);
+      break;
+    // add in the other endpoints
+    default:
+      responses.notFound(request, response);
+      break;
   }
+
   
   return urlStruct.notFound(request, response);
 };
