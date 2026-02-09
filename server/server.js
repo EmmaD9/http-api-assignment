@@ -78,6 +78,9 @@ const onRequest = (request, response) => {
     case '/success':
       responses.success(request, response);
       break;
+    case '/badRequest':
+      responses.badRequest(request, response);
+      break;
     case '/':
       htmlHandler.getIndex(request, response);
       break;
